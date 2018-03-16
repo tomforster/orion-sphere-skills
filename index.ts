@@ -99,24 +99,24 @@ const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, E
 const PsionicPotential = new Skill("Psionic Potential", "", 1, true);
 
 // Elysian Paths
-const Coercion = new Skill("Coercion", "Forcing your will upon other minds", 1, true, IsKelki, true);
+const Coercion = new Skill("Coercion", "Forcing your will upon other minds", 1, true, IsElysian, true);
 const Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear", 1, true, Coercion, true);
 const Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust", 1, true, Coercion, true);
 const Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others", 1, true, Coercion, true, 4);
-const PsionicResonance = new Skill( "Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals", 1, true, IsKelki, true);
+const PsionicResonance = new Skill( "Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals", 1, true, IsElysian, true);
 const ResonantVitality = new Skill("Resonant Vitality", "Communion with natural forces to perform powerful psionic rites", 1, true, PsionicResonance, true, 1);
 const ResonantBlade = new Skill("Resonant Blade",	"Focusing the mind through a crystal-enhanced weapon to deal powerful melee attacks", 1, true, PsionicResonance, true, 2);
-const Psychosomatics = new Skill("Psychosomatics", 	"Using psionic power to promote bodily healing", 1, true, IsKelki, true);
+const Psychosomatics = new Skill("Psychosomatics", 	"Using psionic power to promote bodily healing", 1, true, IsElysian, true);
 const Empathosomatics = new Skill("Empathosomatics", "Empathic transference used to promote calm and analyse psionic effects", 1, true, Psychosomatics, true, 2);
 const Psychirosi = new Skill("Psychirosi", "Using psychosomatic pathways to gain total control over the psion's own body", 1, true, Psychosomatics, true, 3);
 
 // Kelki Paths
-const Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind", 1, true, IsElysian, true);
+const Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind", 1, true, IsKelki, true);
 const TelekineticFinesse = new Skill("Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them", 1, true, Telekinesis, true, 2);
 const TelekineticFortification = new Skill("Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks", 1, true, Telekinesis, true, 3);
 
-const PsionicSkills = [PsionicPotential, IsKelki, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
-    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsElysian, Telekinesis, TelekineticFinesse, TelekineticFortification];
+const PsionicSkills = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
+    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification];
 
 // Species
 const Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls",2, false, IsTerran);
