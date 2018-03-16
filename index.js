@@ -151,6 +151,8 @@ var MainController = /** @class */ (function () {
             throw "ERROR";
     };
     MainController.prototype.isDisabled = function (skill) {
+        if (skill.baseCost === 0)
+            return false;
         if (skill.cost() > this.points)
             return true;
         if (skill.count > 0 && !skill.stacks)
