@@ -44,14 +44,6 @@ class Skill
     }
 }
 
-interface SelectedSkill
-{
-    cost: number;
-    skill: Skill;
-    rank?: number;
-    hasRank: boolean;
-}
-
 /*** COMBAT SKILLS ***/
 const Toughness = new Skill("Toughness", "Grants +1 locational body hit per rank.", 2, true);
 const Resilience = new Skill("Resilience", "Your death count is extended by 100 seconds per rank.", 1, true);
@@ -121,6 +113,20 @@ const TelekineticFortification = new Skill("Telekinetic Fortification", "Using T
 const PsionicSkills = [PsionicPotential, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, Telekinesis, TelekineticFinesse, TelekineticFortification];
 
+// Species
+const Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls",2);
+const ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true);
+const Relentless = new Skill("Relentless"	, "Allows will points to be spent to act for brief periods while badly wounded", 1);
+const Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1);
+const IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1);
+const Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1);
+
+const HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true);
+const PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true);
+
+const SpeciesSkills = [Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, HeroicDevotion, PriestlyDevotion];
+
+
 class MainController implements IController
 {
     totalPoints = 10;
@@ -128,8 +134,9 @@ class MainController implements IController
     combatSkills:Skill[] = CombatSkills;
     professionSkills:Skill[] = ProfessionSkills;
     psiSkills:Skill[] = PsionicSkills;
+    speciesSkills:Skill[] = SpeciesSkills;
 
-    selectedSkills:SelectedSkill[] = [];
+    selectedSkills:Skill[] = [];
     activePage = "combat";
     skills:Skill[] = this.combatSkills;
     
@@ -168,29 +175,14 @@ class MainController implements IController
         this.updateDeps(this.combatSkills);
         this.updateDeps(this.professionSkills);
         this.updateDeps(this.psiSkills);
+        this.updateDeps(this.speciesSkills);
 
-        const selectedSkills = this.combatSkills.filter(skill => skill.count > 0)
+        this.selectedSkills = this.combatSkills.filter(skill => skill.count > 0)
             .concat(this.professionSkills.filter(skill => skill.count > 0))
-            .concat(this.psiSkills.filter(skill => skill.count > 0));
-        
-        this.selectedSkills = [];
-        
-        for(let skill of selectedSkills)
-        {
-            if(skill.stacks)
-            {
-                for (let i = 0; i < skill.count; i++)
-                {
-                    this.selectedSkills.push({skill, rank: i + 1, cost: skill.getCostAtCount(i), hasRank: true})
-                }
-            }
-            else{
-                this.selectedSkills.push({skill, cost:skill.baseCost, hasRank: false});
-            }
-        
-        }
-        
-        this.points = this.totalPoints - this.selectedSkills.reduce((total, next) => total + next.cost, 0);
+            .concat(this.psiSkills.filter(skill => skill.count > 0))
+            .concat(this.speciesSkills.filter(skill => skill.count > 0));
+
+        this.points = this.totalPoints - this.selectedSkills.reduce((total, next) => total + next.pointsSpent(), 0);
         if(this.points < 0) throw "ERROR";
     }
     
@@ -216,6 +208,8 @@ class MainController implements IController
             case "psi":
                 this.skills = this.psiSkills;
                 return;
+            case "species":
+                this.skills = this.speciesSkills;
         }
     }
 }

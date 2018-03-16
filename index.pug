@@ -22,6 +22,8 @@ html(ng-app="calc")
                                     a.nav-link(href="" ng-class="{active: c.activePage === 'profs'}") Professions
                                 li.nav-item(ng-click="c.setPage('psi')")
                                     a.nav-link(href="" ng-class="{active: c.activePage === 'psi'}") Psionics
+                                li.nav-item(ng-click="c.setPage('species')")
+                                    a.nav-link(href="" ng-class="{active: c.activePage === 'psi'}") Species
                             //small Concerned with fighting, resisting injury and attacks, and weapons training.
                     .row
                         .col
@@ -34,7 +36,7 @@ html(ng-app="calc")
                 .col
                     |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .list-group
-                        .selected-skill.list-group-item(ng-repeat="selected in c.selectedSkills")
-                            .selected-skill-name {{selected.skill.name}} {{selected.hasRank ? ("[Rank " + selected.rank + "]") : ''}}
-                            .selected-skill-cost {{selected.cost}}
-                            button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(selected.skill)") Remove
+                        .selected-skill.list-group-item(ng-repeat="skill in c.selectedSkills")
+                            .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
+                            .selected-skill-cost {{skill.pointsSpent()}}
+                            button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove

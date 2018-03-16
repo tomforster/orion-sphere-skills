@@ -92,6 +92,16 @@ var TelekineticFinesse = new Skill("Telekinetic Finesse", "Using focused Telekin
 var TelekineticFortification = new Skill("Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks", 1, true, Telekinesis, true, 3);
 var PsionicSkills = [PsionicPotential, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, Telekinesis, TelekineticFinesse, TelekineticFortification];
+// Species
+var Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls", 2);
+var ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true);
+var Relentless = new Skill("Relentless", "Allows will points to be spent to act for brief periods while badly wounded", 1);
+var Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1);
+var IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1);
+var Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1);
+var HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true);
+var PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true);
+var SpeciesSkills = [Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, HeroicDevotion, PriestlyDevotion];
 var MainController = /** @class */ (function () {
     function MainController() {
         this.totalPoints = 10;
@@ -99,6 +109,7 @@ var MainController = /** @class */ (function () {
         this.combatSkills = CombatSkills;
         this.professionSkills = ProfessionSkills;
         this.psiSkills = PsionicSkills;
+        this.speciesSkills = SpeciesSkills;
         this.selectedSkills = [];
         this.activePage = "combat";
         this.skills = this.combatSkills;
@@ -128,22 +139,12 @@ var MainController = /** @class */ (function () {
         this.updateDeps(this.combatSkills);
         this.updateDeps(this.professionSkills);
         this.updateDeps(this.psiSkills);
-        var selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0; })
+        this.updateDeps(this.speciesSkills);
+        this.selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0; })
             .concat(this.professionSkills.filter(function (skill) { return skill.count > 0; }))
-            .concat(this.psiSkills.filter(function (skill) { return skill.count > 0; }));
-        this.selectedSkills = [];
-        for (var _i = 0, selectedSkills_1 = selectedSkills; _i < selectedSkills_1.length; _i++) {
-            var skill = selectedSkills_1[_i];
-            if (skill.stacks) {
-                for (var i = 0; i < skill.count; i++) {
-                    this.selectedSkills.push({ skill: skill, rank: i + 1, cost: skill.getCostAtCount(i), hasRank: true });
-                }
-            }
-            else {
-                this.selectedSkills.push({ skill: skill, cost: skill.baseCost, hasRank: false });
-            }
-        }
-        this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.cost; }, 0);
+            .concat(this.psiSkills.filter(function (skill) { return skill.count > 0; }))
+            .concat(this.speciesSkills.filter(function (skill) { return skill.count > 0; }));
+        this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.pointsSpent(); }, 0);
         if (this.points < 0)
             throw "ERROR";
     };
@@ -166,6 +167,8 @@ var MainController = /** @class */ (function () {
             case "psi":
                 this.skills = this.psiSkills;
                 return;
+            case "species":
+                this.skills = this.speciesSkills;
         }
     };
     return MainController;
