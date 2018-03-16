@@ -1,0 +1,67 @@
+.skill
+{
+  display:flex;
+  flex-direction: row;
+  padding:7px;
+
+  &.req
+  {
+    margin-left:10px;
+  }
+
+  &.disabled
+  {
+    background-color: #dddddd;
+
+    .skill-cost
+    {
+      pointer-events: none;
+    }
+  }
+
+  .skill-cost
+  {
+    width:3rem;
+    height:3rem;
+    background-color: #eeeeee;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:5px;
+    font-size:1.2em;
+    cursor: pointer;
+    user-select: none;
+
+
+    &:hover
+    {
+      background-color: #f9f9f9;
+    }
+  }
+
+  .skill-name
+  {
+    font-size:0.9em
+  }
+
+  .skill-desc
+  {
+    font-size:0.6em;
+  }
+
+  .skill-info
+  {
+    flex-grow:2;
+  }
+}
+
+label{
+  display: block;
+}
+
+small{
+  line-height:1.5em;
+  font-size:0.7em;
+  display:block;
+}

@@ -1,0 +1,28 @@
+doctype html
+html(ng-app="calc")
+    head
+        script(src="./node_modules/angular/angular.min.js")
+        script(src="./index.js")
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
+        link(href="./styles.css" rel="stylesheet")
+    body(ng-controller="MainController as c")
+        .container
+            .row
+                .col
+                    .row.mb-3
+                        .col
+                            .h4.mb-1 Combat Skills
+                            small concerned with fighting, resisting injury and attacks, and weapons training.
+                    .row
+                        .col
+                            .list-group
+                                .list-group-item.skill(ng-repeat="skill in c.combatSkills" ng-class="{req:skill.hasPrerequisites, disabled: c.isDisabled(skill)}")
+                                    .skill-info
+                                        .skill-name {{skill.name}}
+                                        .skill-desc {{skill.description}}
+                                    .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks ? "*" : ""}}
+            .row
+                .col
+                    |{{c.totalPoints - c.points}}/{{c.totalPoints}}
+                    .list-group
+                        .list-group-item(ng-repeat="skill in c.selectedSkills") {{skill.name}} {{skill.count}} {{skill.pointsSpent()}}
