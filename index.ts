@@ -44,6 +44,11 @@ class Skill
     }
 }
 
+const IsTerran = new Skill("Terran", "", 0);
+const IsTulaki = new Skill("Tulaki", "", 0);
+const IsElysian = new Skill("Elysian", "", 0);
+const IsKelki = new Skill("Kelki", "", 0);
+
 /*** COMBAT SKILLS ***/
 const Toughness = new Skill("Toughness", "Grants +1 locational body hit per rank.", 2, true);
 const Resilience = new Skill("Resilience", "Your death count is extended by 100 seconds per rank.", 1, true);
@@ -94,35 +99,32 @@ const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, E
 const PsionicPotential = new Skill("Psionic Potential", "", 1, true);
 
 // Elysian Paths
-const Coercion = new Skill("Coercion", "Forcing your will upon other minds", 1, true, undefined, true);
+const Coercion = new Skill("Coercion", "Forcing your will upon other minds", 1, true, IsKelki, true);
 const Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear", 1, true, Coercion, true);
 const Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust", 1, true, Coercion, true);
 const Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others", 1, true, Coercion, true, 4);
-const PsionicResonance = new Skill( "Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals", 1, true, undefined, true);
+const PsionicResonance = new Skill( "Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals", 1, true, IsKelki, true);
 const ResonantVitality = new Skill("Resonant Vitality", "Communion with natural forces to perform powerful psionic rites", 1, true, PsionicResonance, true, 1);
 const ResonantBlade = new Skill("Resonant Blade",	"Focusing the mind through a crystal-enhanced weapon to deal powerful melee attacks", 1, true, PsionicResonance, true, 2);
-const Psychosomatics = new Skill("Psychosomatics", 	"Using psionic power to promote bodily healing", 1, true, undefined, true);
+const Psychosomatics = new Skill("Psychosomatics", 	"Using psionic power to promote bodily healing", 1, true, IsKelki, true);
 const Empathosomatics = new Skill("Empathosomatics", "Empathic transference used to promote calm and analyse psionic effects", 1, true, Psychosomatics, true, 2);
 const Psychirosi = new Skill("Psychirosi", "Using psychosomatic pathways to gain total control over the psion's own body", 1, true, Psychosomatics, true, 3);
 
 // Kelki Paths
-const Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind", 1, true, undefined, true);
+const Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind", 1, true, IsElysian, true);
 const TelekineticFinesse = new Skill("Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them", 1, true, Telekinesis, true, 2);
 const TelekineticFortification = new Skill("Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks", 1, true, Telekinesis, true, 3);
 
-const PsionicSkills = [PsionicPotential, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
-    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, Telekinesis, TelekineticFinesse, TelekineticFortification];
+const PsionicSkills = [PsionicPotential, IsKelki, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
+    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsElysian, Telekinesis, TelekineticFinesse, TelekineticFortification];
 
 // Species
-const IsTerran = new Skill("Terran", "", 0);
 const Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls",2, false, IsTerran);
 const ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true, IsTerran);
 const Relentless = new Skill("Relentless"	, "Allows will points to be spent to act for brief periods while badly wounded", 1, false, IsTerran);
 const Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1, false, IsTerran);
 const IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1, false, IsTerran);
 const Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1, false, IsTerran);
-
-const IsTulaki = new Skill("Tulaki", "", 0);
 const HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki);
 const PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki);
 
@@ -222,6 +224,8 @@ class MainController implements IController
     {
         IsTulaki.count = 0;
         IsTerran.count = 0;
+        IsKelki.count = 0;
+        IsElysian.count = 0;
 
        this.updateSelected();
 
@@ -230,6 +234,10 @@ class MainController implements IController
             case "terran": IsTerran.count = 1;
                 return;
             case "tulaki": IsTulaki.count = 1;
+                return;
+            case "kelki": IsKelki.count = 1;
+                return;
+            case "elysian": IsElysian.count = 1;
                 return;
         }
     }
