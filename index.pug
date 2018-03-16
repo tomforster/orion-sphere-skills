@@ -23,20 +23,32 @@ html(ng-app="calc")
                                 li.nav-item(ng-click="c.setPage('psi')")
                                     a.nav-link(href="" ng-class="{active: c.activePage === 'psi'}") Psionics
                                 li.nav-item(ng-click="c.setPage('species')")
-                                    a.nav-link(href="" ng-class="{active: c.activePage === 'psi'}") Species
-                            //small Concerned with fighting, resisting injury and attacks, and weapons training.
+                                    a.nav-link(href="" ng-class="{active: c.activePage === 'species'}") Species
                     .row
                         .col
                             .list-group
-                                .list-group-item.skill(ng-repeat="skill in c.skills" ng-class="{req:skill.prerequisite, disabled: c.isDisabled(skill)}" ng-click="c.handleAddSkillButtonClick(skill)")
+                                .list-group-item.page-info(ng-if="c.activePage === 'species'")
+                                    |Some skills and abilities are limited to certain species, either as a result of biology, culture or upbringing. Only members of that specific species can purchase these skills.
+
+                                .list-group-item.skill(ng-repeat="skill in c.skills" ng-class="{group:skill.baseCost === 0, req:skill.prerequisite && skill.prerequisite.baseCost > 0, disabled: c.isDisabled(skill)}" ng-click="c.handleAddSkillButtonClick(skill)")
                                     .skill-info
                                         .skill-name {{skill.name}}
                                         .skill-desc {{skill.description}}
-                                    .skill-cost {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
+                                    .skill-cost(ng-if="skill.baseCost") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
                 .col
-                    |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
-                    .list-group
-                        .selected-skill.list-group-item(ng-repeat="skill in c.selectedSkills")
-                            .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
-                            .selected-skill-cost {{skill.pointsSpent()}}
-                            button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove
+                    .row
+                        .col
+                            select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()")
+                                option(value="null" selected) Select a species
+                                option(value="terran") Terran
+                                option(value="tulaki") Tulaki
+                                option(value="null") Other
+                        .col
+                            .points-total Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
+                    .row
+                        .col
+                            .list-group
+                                .selected-skill.list-group-item(ng-repeat="skill in c.selectedSkills")
+                                    .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
+                                    .selected-skill-cost {{skill.pointsSpent()}}
+                                    button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove

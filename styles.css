@@ -24,7 +24,8 @@ body {
   padding-bottom: 4px;
   border-bottom: 1px transparent;
 }
-.skill {
+.skill,
+.page-info {
   display: flex;
   flex-direction: row;
   padding: 7px;
@@ -33,15 +34,22 @@ body {
   border-radius: 0 !important;
   cursor: pointer;
 }
-.skill.req {
+.skill.group,
+.page-info.group {
+  pointer-events: none;
+}
+.skill.req,
+.page-info.req {
   margin-left: 10px;
 }
-.skill.disabled {
+.skill.disabled,
+.page-info.disabled {
   background-color: #959595;
   color: #c7c7c7;
   pointer-events: none;
 }
-.skill .skill-cost {
+.skill .skill-cost,
+.page-info .skill-cost {
   width: 2rem;
   height: 2rem;
   background-color: #3f3f3f;
@@ -54,17 +62,25 @@ body {
   user-select: none;
   border: #3d3d3d;
 }
-.skill .skill-cost:hover {
+.skill .skill-cost:hover,
+.page-info .skill-cost:hover {
   background-color: #7a7a7a;
 }
-.skill .skill-name {
+.skill .skill-name,
+.page-info .skill-name {
   font-size: 0.9em;
 }
-.skill .skill-desc {
+.skill .skill-desc,
+.page-info .skill-desc {
   font-size: 0.7em;
 }
-.skill .skill-info {
+.skill .skill-info,
+.page-info .skill-info {
   flex-grow: 2;
+}
+.page-info {
+  font-size: 0.9em;
+  background-color: #7a7a7a;
 }
 label {
   display: block;
@@ -88,4 +104,9 @@ small {
   padding: 3px;
   line-height: 1em;
   margin-left: 10px;
+}
+.points-total {
+  font-size: 1.3em;
+  text-align: right;
+  height: 1.8em;
 }

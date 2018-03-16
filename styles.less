@@ -35,7 +35,7 @@ body
   border-bottom: 1px transparent;
 }
 
-.skill
+.skill, .page-info
 {
   display:flex;
   flex-direction: row;
@@ -44,6 +44,11 @@ body
   border-color: #dee2e6;
   border-radius: 0 !important;
   cursor: pointer;
+
+  &.group
+  {
+    pointer-events: none;
+  }
 
   &.req
   {
@@ -94,6 +99,12 @@ body
   }
 }
 
+.page-info
+{
+  font-size: 0.9em;
+  background-color: #7a7a7a;
+}
+
 label{
   display: block;
 }
@@ -133,4 +144,11 @@ small{
     line-height: 1em;
     margin-left: 10px;
   }
+}
+
+.points-total
+{
+  font-size: 1.3em;
+  text-align: right;
+  height: 1.8em;
 }

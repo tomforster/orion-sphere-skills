@@ -114,18 +114,19 @@ const PsionicSkills = [PsionicPotential, Coercion, Endopathoi, Exopathoi, Mnemom
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, Telekinesis, TelekineticFinesse, TelekineticFortification];
 
 // Species
-const Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls",2);
-const ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true);
-const Relentless = new Skill("Relentless"	, "Allows will points to be spent to act for brief periods while badly wounded", 1);
-const Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1);
-const IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1);
-const Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1);
+const IsTerran = new Skill("Terran", "", 0);
+const Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls",2, false, IsTerran);
+const ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true, IsTerran);
+const Relentless = new Skill("Relentless"	, "Allows will points to be spent to act for brief periods while badly wounded", 1, false, IsTerran);
+const Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1, false, IsTerran);
+const IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1, false, IsTerran);
+const Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1, false, IsTerran);
 
-const HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true);
-const PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true);
+const IsTulaki = new Skill("Tulaki", "", 0);
+const HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki);
+const PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki);
 
-const SpeciesSkills = [Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, HeroicDevotion, PriestlyDevotion];
-
+const SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
 
 class MainController implements IController
 {
@@ -137,6 +138,7 @@ class MainController implements IController
     speciesSkills:Skill[] = SpeciesSkills;
 
     selectedSkills:Skill[] = [];
+    selectedSpecies:string;
     activePage = "combat";
     skills:Skill[] = this.combatSkills;
     
@@ -177,10 +179,10 @@ class MainController implements IController
         this.updateDeps(this.psiSkills);
         this.updateDeps(this.speciesSkills);
 
-        this.selectedSkills = this.combatSkills.filter(skill => skill.count > 0)
-            .concat(this.professionSkills.filter(skill => skill.count > 0))
-            .concat(this.psiSkills.filter(skill => skill.count > 0))
-            .concat(this.speciesSkills.filter(skill => skill.count > 0));
+        this.selectedSkills = this.combatSkills.filter(skill => skill.count > 0 && skill.baseCost > 0)
+            .concat(this.professionSkills.filter(skill => skill.count > 0 && skill.baseCost > 0))
+            .concat(this.psiSkills.filter(skill => skill.count > 0 && skill.baseCost > 0))
+            .concat(this.speciesSkills.filter(skill => skill.count > 0 && skill.baseCost > 0));
 
         this.points = this.totalPoints - this.selectedSkills.reduce((total, next) => total + next.pointsSpent(), 0);
         if(this.points < 0) throw "ERROR";
@@ -211,6 +213,22 @@ class MainController implements IController
                 return;
             case "species":
                 this.skills = this.speciesSkills;
+        }
+    }
+
+    handleSpeciesChanged()
+    {
+        IsTulaki.count = 0;
+        IsTerran.count = 0;
+
+       this.updateSelected();
+
+        switch(this.selectedSpecies)
+        {
+            case "terran": IsTerran.count = 1;
+                return;
+            case "tulaki": IsTulaki.count = 1;
+                return;
         }
     }
 }

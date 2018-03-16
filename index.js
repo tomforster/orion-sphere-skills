@@ -93,15 +93,17 @@ var TelekineticFortification = new Skill("Telekinetic Fortification", "Using Tel
 var PsionicSkills = [PsionicPotential, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, Telekinesis, TelekineticFinesse, TelekineticFortification];
 // Species
-var Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls", 2);
-var ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true);
-var Relentless = new Skill("Relentless", "Allows will points to be spent to act for brief periods while badly wounded", 1);
-var Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1);
-var IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1);
-var Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1);
-var HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true);
-var PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true);
-var SpeciesSkills = [Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, HeroicDevotion, PriestlyDevotion];
+var IsTerran = new Skill("Terran", "", 0);
+var Discipline = new Skill("Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls", 2, false, IsTerran);
+var ExtraWillPoint = new Skill("Extra Will Point", "Grants +1 Will Point per rank", 1, true, IsTerran);
+var Relentless = new Skill("Relentless", "Allows will points to be spent to act for brief periods while badly wounded", 1, false, IsTerran);
+var Resolve = new Skill("Resolve", "Allows Will Points to be spent to recover quicker from injury", 1, false, IsTerran);
+var IronMind = new Skill("Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1, false, IsTerran);
+var Stalwart = new Skill("Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1, false, IsTerran);
+var IsTulaki = new Skill("Tulaki", "", 0);
+var HeroicDevotion = new Skill("Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki);
+var PriestlyDevotion = new Skill("Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki);
+var SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
 var MainController = /** @class */ (function () {
     function MainController() {
         this.totalPoints = 10;
@@ -140,10 +142,10 @@ var MainController = /** @class */ (function () {
         this.updateDeps(this.professionSkills);
         this.updateDeps(this.psiSkills);
         this.updateDeps(this.speciesSkills);
-        this.selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0; })
-            .concat(this.professionSkills.filter(function (skill) { return skill.count > 0; }))
-            .concat(this.psiSkills.filter(function (skill) { return skill.count > 0; }))
-            .concat(this.speciesSkills.filter(function (skill) { return skill.count > 0; }));
+        this.selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0 && skill.baseCost > 0; })
+            .concat(this.professionSkills.filter(function (skill) { return skill.count > 0 && skill.baseCost > 0; }))
+            .concat(this.psiSkills.filter(function (skill) { return skill.count > 0 && skill.baseCost > 0; }))
+            .concat(this.speciesSkills.filter(function (skill) { return skill.count > 0 && skill.baseCost > 0; }));
         this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.pointsSpent(); }, 0);
         if (this.points < 0)
             throw "ERROR";
@@ -171,6 +173,19 @@ var MainController = /** @class */ (function () {
                 return;
             case "species":
                 this.skills = this.speciesSkills;
+        }
+    };
+    MainController.prototype.handleSpeciesChanged = function () {
+        IsTulaki.count = 0;
+        IsTerran.count = 0;
+        this.updateSelected();
+        switch (this.selectedSpecies) {
+            case "terran":
+                IsTerran.count = 1;
+                return;
+            case "tulaki":
+                IsTulaki.count = 1;
+                return;
         }
     };
     return MainController;
