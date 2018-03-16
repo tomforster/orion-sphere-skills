@@ -45,3 +45,14 @@ small {
   font-size: 0.7em;
   display: block;
 }
+.selected-skill {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+.selected-skill:hover {
+  background-color: #f9f9f9;
+}
+.selected-skill .selected-skill-name {
+  flex-grow: 2;
+}

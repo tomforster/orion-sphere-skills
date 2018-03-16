@@ -9,10 +9,13 @@ html(ng-app="calc")
         .container
             .row
                 .col
+                    .h2.mb-3 Orion Sphere Skill Calculator
+            .row.mb-3
+                .col
                     .row.mb-3
                         .col
                             .h4.mb-1 Combat Skills
-                            small concerned with fighting, resisting injury and attacks, and weapons training.
+                            small Concerned with fighting, resisting injury and attacks, and weapons training.
                     .row
                         .col
                             .list-group
@@ -23,6 +26,8 @@ html(ng-app="calc")
                                     .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks ? "*" : ""}}
             .row
                 .col
-                    |{{c.totalPoints - c.points}}/{{c.totalPoints}}
+                    |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .list-group
-                        .list-group-item(ng-repeat="skill in c.selectedSkills") {{skill.name}} {{skill.count}} {{skill.pointsSpent()}}
+                        .selected-skill.list-group-item(ng-repeat="selected in c.selectedSkills" ng-click="c.handleRemoveSkillButtonClick(selected.skill)")
+                            .selected-skill-name {{selected.skill.name}} {{selected.hasRank ? selected.rank : ''}}
+                            .selected-skill-cost {{selected.cost}}

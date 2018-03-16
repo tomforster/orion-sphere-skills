@@ -18,9 +18,12 @@ var Skill = /** @class */ (function () {
             return this.baseCost;
         var points = 0;
         for (var i = 0; i < this.count; i++) {
-            points += this.baseCost + i;
+            points += this.getCostAtCount(i);
         }
         return points;
+    };
+    Skill.prototype.getCostAtCount = function (count) {
+        return this.stacks ? this.baseCost + count : this.baseCost;
     };
     return Skill;
 }());
@@ -53,8 +56,20 @@ var MainController = /** @class */ (function () {
         this.updateSelected();
     };
     MainController.prototype.updateSelected = function () {
-        this.selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0; });
-        this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.pointsSpent(); }, 0);
+        var selectedSkills = this.combatSkills.filter(function (skill) { return skill.count > 0; });
+        this.selectedSkills = [];
+        for (var _i = 0, selectedSkills_1 = selectedSkills; _i < selectedSkills_1.length; _i++) {
+            var skill = selectedSkills_1[_i];
+            if (skill.stacks) {
+                for (var i = 0; i < skill.count; i++) {
+                    this.selectedSkills.push({ skill: skill, rank: i + 1, cost: skill.getCostAtCount(i), hasRank: true });
+                }
+            }
+            else {
+                this.selectedSkills.push({ skill: skill, cost: skill.baseCost, hasRank: false });
+            }
+        }
+        this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.cost; }, 0);
         if (this.points < 0)
             throw "ERROR";
     };

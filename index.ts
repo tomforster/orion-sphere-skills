@@ -20,11 +20,12 @@ class Skill
         this.stacks = stacks;
     }
     
-    cost(){
+    cost():number
+    {
         return this.stacks ? this.baseCost + this.count : this.baseCost;
     }
     
-    pointsSpent()
+    pointsSpent():number
     {
         if(!this.stacks) return this.baseCost;
         
@@ -32,11 +33,24 @@ class Skill
         
         for(let i = 0; i < this.count; i++)
         {
-            points += this.baseCost + i;
+            points += this.getCostAtCount(i);
         }
         
         return points;
     }
+    
+    getCostAtCount(count:number):number
+    {
+        return this.stacks ? this.baseCost + count : this.baseCost;
+    }
+}
+
+interface SelectedSkill
+{
+    cost:number;
+    skill:Skill;
+    rank?:number;
+    hasRank:boolean;
 }
 
 const combatSkills:Skill[] = [
@@ -124,7 +138,7 @@ class MainController implements IController
     totalPoints = 10;
     points = 10;
     combatSkills:Skill[] = combatSkills;
-    selectedSkills:Skill[] = [];
+    selectedSkills:SelectedSkill[] = [];
     
     handleAddSkillButtonClick(skill:Skill)
     {
@@ -143,8 +157,26 @@ class MainController implements IController
     
     updateSelected()
     {
-        this.selectedSkills = this.combatSkills.filter(skill => skill.count > 0);
-        this.points = this.totalPoints - this.selectedSkills.reduce((total, next) => total + next.pointsSpent(), 0);
+        const selectedSkills = this.combatSkills.filter(skill => skill.count > 0);
+        
+        this.selectedSkills = [];
+        
+        for(let skill of selectedSkills)
+        {
+            if(skill.stacks)
+            {
+                for (let i = 0; i < skill.count; i++)
+                {
+                    this.selectedSkills.push({skill, rank: i + 1, cost: skill.getCostAtCount(i), hasRank: true})
+                }
+            }
+            else{
+                this.selectedSkills.push({skill, cost:skill.baseCost, hasRank: false});
+            }
+        
+        }
+        
+        this.points = this.totalPoints - this.selectedSkills.reduce((total, next) => total + next.cost, 0);
         if(this.points < 0) throw "ERROR";
     }
     
