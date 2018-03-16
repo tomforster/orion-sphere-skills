@@ -93,7 +93,6 @@ small {
 .selected-skill {
   display: flex;
   flex-direction: row;
-  cursor: pointer;
   padding: 7px;
   background-color: #646464;
 }
