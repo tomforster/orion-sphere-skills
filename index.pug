@@ -13,18 +13,24 @@ html(ng-app="calc")
                     .h2.mb-3.mt-3 Orion Sphere Skill Calculator
             .row.mb-3
                 .col-7
-                    .row.mb-3
+                    .row
                         .col
-                            .h4.mb-1 Combat Skills
-                            small Concerned with fighting, resisting injury and attacks, and weapons training.
+                            ul.nav.nav-tabs
+                                li.nav-item(ng-click="c.setPage('combat')")
+                                    a.nav-link(href="" ng-class="{active: c.activePage === 'combat'}") Combat
+                                li.nav-item(ng-click="c.setPage('profs')")
+                                    a.nav-link(href="" ng-class="{active: c.activePage === 'profs'}") Professions
+                                li.nav-item(ng-click="c.setPage('psi')")
+                                    a.nav-link(href="" ng-class="{active: c.activePage === 'psi'}") Psionics
+                            //small Concerned with fighting, resisting injury and attacks, and weapons training.
                     .row
                         .col
                             .list-group
-                                .list-group-item.skill(ng-repeat="skill in c.combatSkills" ng-class="{req:skill.hasPrerequisites, disabled: c.isDisabled(skill)}")
+                                .list-group-item.skill(ng-repeat="skill in c.skills" ng-class="{req:skill.prerequisite, disabled: c.isDisabled(skill)}")
                                     .skill-info
                                         .skill-name {{skill.name}}
                                         .skill-desc {{skill.description}}
-                                    .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks ? "*" : ""}}
+                                    .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
                 .col
                     |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .list-group
