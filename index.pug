@@ -28,11 +28,11 @@ html(ng-app="calc")
                     .row
                         .col
                             .list-group
-                                .list-group-item.skill(ng-repeat="skill in c.skills" ng-class="{req:skill.prerequisite, disabled: c.isDisabled(skill)}")
+                                .list-group-item.skill(ng-repeat="skill in c.skills" ng-class="{req:skill.prerequisite, disabled: c.isDisabled(skill)}" ng-click="c.handleAddSkillButtonClick(skill)")
                                     .skill-info
                                         .skill-name {{skill.name}}
                                         .skill-desc {{skill.description}}
-                                    .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
+                                    .skill-cost {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
                 .col
                     |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .list-group

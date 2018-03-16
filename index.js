@@ -149,6 +149,8 @@ var MainController = /** @class */ (function () {
             throw "ERROR";
     };
     MainController.prototype.isDisabled = function (skill) {
+        if (skill.cost() > this.points)
+            return true;
         if (!skill.prerequisite)
             return false;
         else {

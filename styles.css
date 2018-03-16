@@ -31,6 +31,7 @@ body {
   background-color: #646464;
   border-color: #dee2e6;
   border-radius: 0 !important;
+  cursor: pointer;
 }
 .skill.req {
   margin-left: 10px;
@@ -38,8 +39,6 @@ body {
 .skill.disabled {
   background-color: #959595;
   color: #c7c7c7;
-}
-.skill.disabled .skill-cost {
   pointer-events: none;
 }
 .skill .skill-cost {
@@ -52,7 +51,6 @@ body {
   align-items: center;
   margin-left: 5px;
   font-size: 1.2em;
-  cursor: pointer;
   user-select: none;
   border: #3d3d3d;
 }

@@ -188,6 +188,7 @@ class MainController implements IController
     
     isDisabled(skill:Skill)
     {
+        if(skill.cost() > this.points) return true;
         if(!skill.prerequisite) return false;
         else {
              return skill.prerequisite.count < skill.prerequisiteRank;
