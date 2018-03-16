@@ -37,6 +37,7 @@ body {
 .skill.group,
 .page-info.group {
   pointer-events: none;
+  background-color: #3f3f3f;
 }
 .skill.req,
 .page-info.req {
