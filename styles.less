@@ -1,8 +1,15 @@
+body
+{
+  background-color: #3d3d3d;
+  color: white;
+}
+
 .skill
 {
   display:flex;
   flex-direction: row;
   padding:7px;
+  background-color: #646464;
 
   &.req
   {
@@ -11,7 +18,8 @@
 
   &.disabled
   {
-    background-color: #dddddd;
+    background-color: #959595;
+    color: #c7c7c7;
 
     .skill-cost
     {
@@ -21,9 +29,9 @@
 
   .skill-cost
   {
-    width:3rem;
-    height:3rem;
-    background-color: #eeeeee;
+    width:2rem;
+    height:2rem;
+    background-color: #3f3f3f;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
@@ -32,11 +40,12 @@
     font-size:1.2em;
     cursor: pointer;
     user-select: none;
+    border: #3d3d3d;
 
 
     &:hover
     {
-      background-color: #f9f9f9;
+      background-color: #7a7a7a;
     }
   }
 
@@ -47,7 +56,7 @@
 
   .skill-desc
   {
-    font-size:0.6em;
+    font-size:0.7em;
   }
 
   .skill-info
@@ -71,11 +80,13 @@ small{
   display:flex;
   flex-direction: row;
   cursor: pointer;
+  padding:7px;
+  background-color: #646464;
 
-  &:hover
-  {
-    background-color: #f9f9f9;
-  }
+  //&:hover
+  //{
+  //  background-color: #f9f9f9;
+  //}
 
   .selected-skill-name
   {
@@ -85,5 +96,12 @@ small{
   .selected-skill-cost
   {
 
+  }
+
+  .selected-skill-delete
+  {
+    padding:3px;
+    line-height: 1em;
+    margin-left: 10px;
   }
 }

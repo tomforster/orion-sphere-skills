@@ -1,6 +1,7 @@
 doctype html
 html(ng-app="calc")
     head
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js")
         script(src="./index.js")
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
@@ -9,9 +10,9 @@ html(ng-app="calc")
         .container
             .row
                 .col
-                    .h2.mb-3 Orion Sphere Skill Calculator
+                    .h2.mb-3.mt-3 Orion Sphere Skill Calculator
             .row.mb-3
-                .col
+                .col-7
                     .row.mb-3
                         .col
                             .h4.mb-1 Combat Skills
@@ -24,10 +25,10 @@ html(ng-app="calc")
                                         .skill-name {{skill.name}}
                                         .skill-desc {{skill.description}}
                                     .skill-cost(ng-click="c.handleAddSkillButtonClick(skill)") {{ skill.cost() }}{{skill.stacks ? "*" : ""}}
-            .row
                 .col
                     |Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .list-group
-                        .selected-skill.list-group-item(ng-repeat="selected in c.selectedSkills" ng-click="c.handleRemoveSkillButtonClick(selected.skill)")
-                            .selected-skill-name {{selected.skill.name}} {{selected.hasRank ? selected.rank : ''}}
+                        .selected-skill.list-group-item(ng-repeat="selected in c.selectedSkills")
+                            .selected-skill-name {{selected.skill.name}} {{selected.hasRank ? ("[Rank " + selected.rank + "]") : ''}}
                             .selected-skill-cost {{selected.cost}}
+                            button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(selected.skill)") Remove
