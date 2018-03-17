@@ -148,7 +148,7 @@ class MainController implements IController
     
     handleAddSkillButtonClick(skill:Skill)
     {
-        if((skill.stacks || skill.count === 0) && (skill.cost() <= this.points) && (skill.maxCount && skill.count < skill.maxCount))
+        if((skill.stacks || skill.count === 0) && (skill.cost() <= this.points) && (!skill.maxCount || skill.count < skill.maxCount))
         {
             skill.count++;
             this.updateSelected();

@@ -120,7 +120,7 @@ var MainController = /** @class */ (function () {
         this.skills = this.combatSkills;
     }
     MainController.prototype.handleAddSkillButtonClick = function (skill) {
-        if ((skill.stacks || skill.count === 0) && (skill.cost() <= this.points) && (skill.maxCount && skill.count < skill.maxCount)) {
+        if ((skill.stacks || skill.count === 0) && (skill.cost() <= this.points) && (!skill.maxCount || skill.count < skill.maxCount)) {
             skill.count++;
             this.updateSelected();
         }
