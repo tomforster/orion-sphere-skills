@@ -98,7 +98,7 @@ const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, E
     SpacerRep, ClearanceCertified, AscendancyStatus, CommonalityStatus, DominionStatus, FreeUnionStatus
 ];
 
-const PsionicPotential = new Skill("Psionic Potential", "", 1, true);
+const PsionicPotential = new Skill("Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true);
 
 // Elysian Paths
 const Coercion = new Skill("Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);

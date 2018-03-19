@@ -79,7 +79,7 @@ var ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, Eth
     HelmConsole, WeaponsConsole, CommsConsole, EngineeringConsole, ScienceConsole,
     SpacerRep, ClearanceCertified, AscendancyStatus, CommonalityStatus, DominionStatus, FreeUnionStatus
 ];
-var PsionicPotential = new Skill("Psionic Potential", "", 1, true);
+var PsionicPotential = new Skill("Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true);
 // Elysian Paths
 var Coercion = new Skill("Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);
 var Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear. Requires Coercion Rank 1.", 1, true, Coercion, true, undefined, 6);
