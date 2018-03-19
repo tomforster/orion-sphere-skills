@@ -1,3 +1,6 @@
+@colour1: #428;
+@colour2: #6531c7;
+
 body
 {
   background-color: #2f2f2f;
@@ -60,13 +63,18 @@ body
     background-color: #959595;
     color: #d8d8d8;
     pointer-events: none;
+
+    .skill-cost
+    {
+      background-color: #818181;
+    }
   }
 
   .skill-cost
   {
     width:2rem;
     height:2rem;
-    background-color: #3f3f3f;
+    background-color: @colour1;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
@@ -80,7 +88,7 @@ body
 
     &:hover
     {
-      background-color: #7a7a7a;
+      background-color: @colour2;
     }
   }
 
@@ -116,11 +124,10 @@ small{
   display:block;
 }
 
-.selected-skill
-{
-  display:flex;
+.selected-skill {
+  display: flex;
   flex-direction: row;
-  padding:7px;
+  padding: 7px;
   background-color: #646464;
 
   //&:hover
@@ -128,21 +135,28 @@ small{
   //  background-color: #f9f9f9;
   //}
 
-  .selected-skill-name
-  {
-    flex-grow:2;
+  .selected-skill-name {
+    flex-grow: 2;
   }
 
-  .selected-skill-cost
-  {
+  .selected-skill-cost {
 
   }
 
-  .selected-skill-delete
-  {
-    padding:3px;
+  .selected-skill-delete {
+    padding: 3px;
     line-height: 1em;
     margin-left: 10px;
+    //  background-color: @colour1;
+    //  border-color: @colour1;
+    //  color: white;
+    //
+    //  &:hover
+    //  {
+    //    background-color: @colour2;
+    //    border-color: @colour2
+    //  }
+    //}
   }
 }
 
