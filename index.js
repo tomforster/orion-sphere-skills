@@ -1,3 +1,13 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Skill = /** @class */ (function () {
     function Skill(id, name, description, baseCost, stacks, prerequisite, stacksAreFree, prerequisiteRank, maxCount) {
         if (stacks === void 0) { stacks = false; }
@@ -33,10 +43,19 @@ var Skill = /** @class */ (function () {
     };
     return Skill;
 }());
-var IsTerran = new Skill(1, "Terran", "", 0);
-var IsTulaki = new Skill(2, "Tulaki", "", 0);
-var IsElysian = new Skill(3, "Elysian", "", 0);
-var IsKelki = new Skill(4, "Kelki", "", 0);
+var Species = /** @class */ (function (_super) {
+    __extends(Species, _super);
+    function Species(id, name) {
+        return _super.call(this, id, name, "", 0) || this;
+    }
+    return Species;
+}(Skill));
+var IsTerran = new Species(1, "Terran");
+var IsTulaki = new Species(2, "Tulaki");
+var IsElysian = new Species(3, "Elysian");
+var IsKelki = new Species(4, "Kelki");
+var IsOther = new Species(60, "Other");
+var SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsOther];
 /*** COMBAT SKILLS ***/
 var Toughness = new Skill(5, "Toughness", "Grants +1 locational body hit per rank.", 2, true);
 var Resilience = new Skill(6, "Resilience", "Your death count is extended by 100 seconds per rank.", 1, true);
@@ -108,12 +127,13 @@ var Stalwart = new Skill(57, "Stalwart", "Allows Will Points to be spent to act 
 var HeroicDevotion = new Skill(58, "Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki);
 var PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki);
 var SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
-var allSkills = (_a = [IsTerran, IsElysian, IsKelki, IsTulaki]).concat.apply(_a, CombatSkills.concat(ProfessionSkills, PsionicSkills, SpeciesSkills));
+var allSkills = SpeciesTypes.concat.apply(SpeciesTypes, CombatSkills.concat(ProfessionSkills, PsionicSkills, SpeciesSkills));
 var MainController = /** @class */ (function () {
     function MainController($location) {
         this.$location = $location;
         this.totalPoints = 10;
         this.points = 10;
+        this.speciesTypes = SpeciesTypes;
         this.selectedSkills = [];
         this.activePage = "combat";
         this.skills = CombatSkills;
@@ -133,6 +153,10 @@ var MainController = /** @class */ (function () {
                             skill.count = skillCount;
                     }
                 });
+                if (SpeciesTypes.filter(function (s) { return s.count > 0; }).length > 1) {
+                    throw new Error("Multiple species detected");
+                }
+                this.selectedSpecies = SpeciesTypes.find(function (s) { return s.count > 0; });
                 this.updateSelected();
             }
             catch (e) {
@@ -171,7 +195,7 @@ var MainController = /** @class */ (function () {
             this.selectedSkills = [];
             this.points = this.totalPoints;
         }
-        var stringRep = btoa(this.selectedSkills.filter(function (skill) { return skill.count > 0; }).map(function (skill) { return skill.id + (skill.count > 1 ? "." + skill.count : ""); }).join(","));
+        var stringRep = btoa((this.selectedSpecies ? this.selectedSpecies.id + "," : "") + this.selectedSkills.filter(function (skill) { return skill.count > 0; }).map(function (skill) { return skill.id + (skill.count > 1 ? "." + skill.count : ""); }).join(","));
         this.$location.replace();
         this.$location.search("skills", stringRep);
     };
@@ -205,25 +229,11 @@ var MainController = /** @class */ (function () {
         }
     };
     MainController.prototype.handleSpeciesChanged = function () {
-        IsTulaki.count = 0;
-        IsTerran.count = 0;
-        IsKelki.count = 0;
-        IsElysian.count = 0;
+        SpeciesTypes.forEach(function (s) { return s.count = 0; });
         this.updateSelected();
-        switch (this.selectedSpecies) {
-            case "terran":
-                IsTerran.count = 1;
-                return;
-            case "tulaki":
-                IsTulaki.count = 1;
-                return;
-            case "kelki":
-                IsKelki.count = 1;
-                return;
-            case "elysian":
-                IsElysian.count = 1;
-                return;
-        }
+        if (this.selectedSpecies)
+            this.selectedSpecies.count++;
+        this.updateSelected();
     };
     MainController.$inject = ["$location"];
     return MainController;
@@ -231,5 +241,4 @@ var MainController = /** @class */ (function () {
 var angular;
 var module = angular.module("calc", []);
 module.controller("MainController", MainController);
-var _a;
 //# sourceMappingURL=index.js.map

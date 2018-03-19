@@ -16,13 +16,8 @@ html(ng-app="calc")
             .d-block.d-sm-block.d-md-block.d-lg-none.mb-3
                 .row
                     .col
-                        select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()")
+                        select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()" ng-options="species.name for species in c.speciesTypes")
                             option(value="" selected) Select a species
-                            option(value="elysian") Elysian
-                            option(value="kelki") Kelki
-                            option(value="terran") Terran
-                            option(value="tulaki") Tulaki
-                            option(value="null") Other
                     .col
                         .points-total Points
                             span.d-none.d-sm-inline  Spent
@@ -63,13 +58,8 @@ html(ng-app="calc")
                 .col.d-none.d-sm-none.d-md-none.d-lg-block
                     .row.no-gutters
                         .col
-                            select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()")
+                            select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()" ng-options="species.name for species in c.speciesTypes")
                                 option(value="" selected) Select a species
-                                option(value="elysian") Elysian
-                                option(value="kelki") Kelki
-                                option(value="terran") Terran
-                                option(value="tulaki") Tulaki
-                                option(value="null") Other
                         .col
                             .points-total Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
                     .row

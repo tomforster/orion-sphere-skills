@@ -48,10 +48,21 @@ class Skill
     }
 }
 
-const IsTerran = new Skill(1, "Terran", "", 0);
-const IsTulaki = new Skill(2, "Tulaki", "", 0);
-const IsElysian = new Skill(3, "Elysian", "", 0);
-const IsKelki = new Skill(4, "Kelki", "", 0);
+class Species extends Skill
+{
+    constructor(id:number, name:string)
+    {
+        super(id, name, "", 0);
+    }
+}
+
+const IsTerran = new Species(1, "Terran");
+const IsTulaki = new Species(2, "Tulaki");
+const IsElysian = new Species(3, "Elysian");
+const IsKelki = new Species(4, "Kelki");
+const IsOther = new Species(60, "Other");
+
+const SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsOther];
 
 /*** COMBAT SKILLS ***/
 const Toughness = new Skill(5, "Toughness", "Grants +1 locational body hit per rank.", 2, true);
@@ -134,15 +145,17 @@ const PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1
 
 const SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
 
-const allSkills = [IsTerran, IsElysian, IsKelki, IsTulaki].concat(...CombatSkills, ...ProfessionSkills, ...PsionicSkills, ...SpeciesSkills);
+const allSkills = SpeciesTypes.concat(...CombatSkills, ...ProfessionSkills, ...PsionicSkills, ...SpeciesSkills);
 
 class MainController implements IController
 {
     totalPoints = 10;
     points = 10;
 
+    speciesTypes = SpeciesTypes;
+    
     selectedSkills:Skill[] = [];
-    selectedSpecies:string;
+    selectedSpecies:Species;
     activePage = "combat";
     skills:Skill[] = CombatSkills;
     
@@ -171,7 +184,13 @@ class MainController implements IController
                         if (skill) skill.count = skillCount;
                     }
                 });
-    
+                
+                if(SpeciesTypes.filter(s => s.count > 0).length > 1)
+                {
+                    throw new Error("Multiple species detected");
+                }
+                
+                this.selectedSpecies = SpeciesTypes.find(s => s.count > 0);
                 this.updateSelected();
             }
             catch (e)
@@ -226,7 +245,7 @@ class MainController implements IController
             this.points = this.totalPoints;
         }
     
-        const stringRep = btoa(this.selectedSkills.filter(skill => skill.count > 0).map(skill => skill.id + (skill.count > 1 ? "." + skill.count : "")).join(","));
+        const stringRep = btoa((this.selectedSpecies ? this.selectedSpecies.id + "," : "") + this.selectedSkills.filter(skill => skill.count > 0).map(skill => skill.id + (skill.count > 1 ? "." + skill.count : "")).join(","));
         this.$location.replace();
         this.$location.search("skills", stringRep);
     }
@@ -263,24 +282,11 @@ class MainController implements IController
 
     handleSpeciesChanged()
     {
-        IsTulaki.count = 0;
-        IsTerran.count = 0;
-        IsKelki.count = 0;
-        IsElysian.count = 0;
+        SpeciesTypes.forEach(s => s.count = 0);
+        this.updateSelected();
 
-       this.updateSelected();
-
-        switch(this.selectedSpecies)
-        {
-            case "terran": IsTerran.count = 1;
-                return;
-            case "tulaki": IsTulaki.count = 1;
-                return;
-            case "kelki": IsKelki.count = 1;
-                return;
-            case "elysian": IsElysian.count = 1;
-                return;
-        }
+        if(this.selectedSpecies) this.selectedSpecies.count++;
+        this.updateSelected();
     }
 }
 
