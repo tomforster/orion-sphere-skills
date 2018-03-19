@@ -82,9 +82,9 @@ var ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, Eth
 var PsionicPotential = new Skill("Psionic Potential", "", 1, true);
 // Elysian Paths
 var Coercion = new Skill("Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);
-var Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear. Requires Coercion Rank 2.", 1, true, Coercion, true, undefined, 6);
-var Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust. Requires Coercion Rank 2.", 1, true, Coercion, true, undefined, 6);
-var Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others. Requires Coercion Rank 2.", 1, true, Coercion, true, 4, 6);
+var Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear. Requires Coercion Rank 1.", 1, true, Coercion, true, undefined, 6);
+var Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust. Requires Coercion Rank 1.", 1, true, Coercion, true, undefined, 6);
+var Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others. Requires Coercion Rank 4.", 1, true, Coercion, true, 4, 6);
 var PsionicResonance = new Skill("Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals.", 1, true, IsElysian, true, undefined, 6);
 var ResonantVitality = new Skill("Resonant Vitality", "Communion with natural forces to perform powerful psionic rites. Requires Psionic Resonance Rank 1.", 1, true, PsionicResonance, true, 1, 6);
 var ResonantBlade = new Skill("Resonant Blade", "Focusing the mind through a crystal-enhanced weapon to deal powerful melee attacks. Requires Psionic Resonance Rank 2.", 1, true, PsionicResonance, true, 2, 6);
