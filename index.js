@@ -81,20 +81,20 @@ var ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, Eth
 ];
 var PsionicPotential = new Skill("Psionic Potential", "", 1, true);
 // Elysian Paths
-var Coercion = new Skill("Coercion", "Forcing your will upon other minds", 1, true, IsElysian, true, undefined, 6);
-var Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear", 1, true, Coercion, true, undefined, 6);
-var Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust", 1, true, Coercion, true, undefined, 6);
-var Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others", 1, true, Coercion, true, 4, 6);
-var PsionicResonance = new Skill("Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals", 1, true, IsElysian, true, undefined, 6);
-var ResonantVitality = new Skill("Resonant Vitality", "Communion with natural forces to perform powerful psionic rites", 1, true, PsionicResonance, true, 1, 6);
-var ResonantBlade = new Skill("Resonant Blade", "Focusing the mind through a crystal-enhanced weapon to deal powerful melee attacks", 1, true, PsionicResonance, true, 2, 6);
-var Psychosomatics = new Skill("Psychosomatics", "Using psionic power to promote bodily healing", 1, true, IsElysian, true, undefined, 6);
-var Empathosomatics = new Skill("Empathosomatics", "Empathic transference used to promote calm and analyse psionic effects", 1, true, Psychosomatics, true, 2, 6);
-var Psychirosi = new Skill("Psychirosi", "Using psychosomatic pathways to gain total control over the psion's own body", 1, true, Psychosomatics, true, 3, 6);
+var Coercion = new Skill("Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);
+var Endopathoi = new Skill("Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear. Requires Coercion Rank 2.", 1, true, Coercion, true, undefined, 6);
+var Exopathoi = new Skill("Exopathoi", "Projecting the emotions of Anger, Anticipation, Joy & Trust. Requires Coercion Rank 2.", 1, true, Coercion, true, undefined, 6);
+var Mnemomorphosis = new Skill("Mnemomorphosis", "Delicately reprogramming the minds of others. Requires Coercion Rank 2.", 1, true, Coercion, true, 4, 6);
+var PsionicResonance = new Skill("Psionic Resonance", "Utilizing resonance to commune with other minds and use psi crystals.", 1, true, IsElysian, true, undefined, 6);
+var ResonantVitality = new Skill("Resonant Vitality", "Communion with natural forces to perform powerful psionic rites. Requires Psionic Resonance Rank 1.", 1, true, PsionicResonance, true, 1, 6);
+var ResonantBlade = new Skill("Resonant Blade", "Focusing the mind through a crystal-enhanced weapon to deal powerful melee attacks. Requires Psionic Resonance Rank 2.", 1, true, PsionicResonance, true, 2, 6);
+var Psychosomatics = new Skill("Psychosomatics", "Using psionic power to promote bodily healing.", 1, true, IsElysian, true, undefined, 6);
+var Empathosomatics = new Skill("Empathosomatics", "Empathic transference used to promote calm and analyse psionic effects. Requires Psychosomatics Rank 2.", 1, true, Psychosomatics, true, 2, 6);
+var Psychirosi = new Skill("Psychirosi", "Using psychosomatic pathways to gain total control over the psion's own body. Requires Psychosomatics Rank 3.", 1, true, Psychosomatics, true, 3, 6);
 // Kelki Paths
-var Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind", 1, true, IsKelki, true, undefined, 6);
-var TelekineticFinesse = new Skill("Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them", 1, true, Telekinesis, true, 2, 6);
-var TelekineticFortification = new Skill("Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks", 1, true, Telekinesis, true, 3, 6);
+var Telekinesis = new Skill("Telekinesis", "Moving physical matter with the power of the mind.", 1, true, IsKelki, true, undefined, 6);
+var TelekineticFinesse = new Skill("Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them. Requires Telekinesis Rank 2.", 1, true, Telekinesis, true, 2, 6);
+var TelekineticFortification = new Skill("Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks. Requires Telekinesis Rank 3.", 1, true, Telekinesis, true, 3, 6);
 var PsionicSkills = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification];
 // Species
