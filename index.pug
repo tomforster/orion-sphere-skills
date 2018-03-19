@@ -61,7 +61,7 @@ html(ng-app="calc")
                                         .skill-desc {{skill.description}}
                                     .skill-cost(ng-if="skill.baseCost") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
                 .col.d-none.d-sm-none.d-md-none.d-lg-block
-                    .row
+                    .row.no-gutters
                         .col
                             select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()")
                                 option(value="" selected) Select a species
