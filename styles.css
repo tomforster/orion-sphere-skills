@@ -2,6 +2,14 @@ body {
   background-color: #2f2f2f;
   color: white;
 }
+.header {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  height: 55px;
+  margin-right: 10px;
+}
 .nav-tabs {
   display: flex;
   flex-direction: row;
