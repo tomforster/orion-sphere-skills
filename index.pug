@@ -60,6 +60,8 @@ html(ng-app="calc")
                                     .skill-info
                                         .skill-name {{skill.name}}
                                         .skill-desc {{skill.description}}
+                                            span(ng-if="skill.wikiLink") &nbsp;
+                                            a.wiki-link(ng-if="skill.wikiLink" ng-href="{{skill.getWikiLink()}}" target="_blank") [View on Wiki]
                                     .skill-cost(ng-if="skill.baseCost") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
                 .col.d-none.d-sm-none.d-md-none.d-lg-block
                     .row.no-gutters
