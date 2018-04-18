@@ -50,17 +50,22 @@ class Skill
 
 class Species extends Skill
 {
-    constructor(id:number, name:string)
+    psiCapable:boolean;
+    
+    constructor(id:number, name:string, psiCapable = false)
     {
         super(id, name, "", 0);
+        this.psiCapable = psiCapable;
     }
 }
 
 const IsTerran = new Species(1, "Terran");
 const IsTulaki = new Species(2, "Tulaki");
-const IsElysian = new Species(3, "Elysian");
-const IsKelki = new Species(4, "Kelki");
+const IsElysian = new Species(3, "Elysian", true);
+const IsKelki = new Species(4, "Kelki", true);
 const IsOther = new Species(60, "Other");
+
+const IsPsiCapable = new Skill(61, "", "", 0);
 
 const SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsOther];
 
@@ -111,7 +116,7 @@ const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, E
     SpacerRep, ClearanceCertified, AscendancyStatus, CommonalityStatus, DominionStatus, FreeUnionStatus
 ];
 
-const PsionicPotential = new Skill(38, "Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true);
+const PsionicPotential = new Skill(38, "Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true, IsPsiCapable);
 
 // Elysian Paths
 const Coercion = new Skill(39, "Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);
@@ -130,7 +135,7 @@ const Telekinesis = new Skill(49, "Telekinesis", "Moving physical matter with th
 const TelekineticFinesse = new Skill(50, "Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them. Requires Telekinesis Rank 2.", 1, true, Telekinesis, true, 2, 6);
 const TelekineticFortification = new Skill(51, "Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks. Requires Telekinesis Rank 3.", 1, true, Telekinesis, true, 3, 6);
 
-const PsionicSkills = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
+const PsionicSkills:Skill[] = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification];
 
 // Species
@@ -145,7 +150,7 @@ const PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1
 
 const SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
 
-const allSkills = SpeciesTypes.concat(...CombatSkills, ...ProfessionSkills, ...PsionicSkills, ...SpeciesSkills);
+const allSkills = [].concat(...SpeciesTypes, ...CombatSkills, ...ProfessionSkills, ...PsionicSkills, ...SpeciesSkills, IsPsiCapable);
 
 class MainController implements IController
 {
@@ -283,9 +288,17 @@ class MainController implements IController
     handleSpeciesChanged()
     {
         SpeciesTypes.forEach(s => s.count = 0);
+        IsPsiCapable.count = 0;
+        
         this.updateSelected();
 
-        if(this.selectedSpecies) this.selectedSpecies.count++;
+        if(this.selectedSpecies){
+            this.selectedSpecies.count++;
+            if(this.selectedSpecies.psiCapable)
+            {
+                IsPsiCapable.count++;
+            }
+        }
         this.updateSelected();
     }
 }

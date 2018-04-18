@@ -75,3 +75,7 @@ html(ng-app="calc")
                                     .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
                                     .selected-skill-cost {{skill.pointsSpent()}}
                                     button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove
+
+            .row.mt-3
+                .col
+                    small.text-center This is a fan project created for Orion Sphere LRP. All text and descriptions are &copy; 2018 Orion Sphere LRP.

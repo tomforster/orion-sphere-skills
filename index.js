@@ -45,16 +45,20 @@ var Skill = /** @class */ (function () {
 }());
 var Species = /** @class */ (function (_super) {
     __extends(Species, _super);
-    function Species(id, name) {
-        return _super.call(this, id, name, "", 0) || this;
+    function Species(id, name, psiCapable) {
+        if (psiCapable === void 0) { psiCapable = false; }
+        var _this = _super.call(this, id, name, "", 0) || this;
+        _this.psiCapable = psiCapable;
+        return _this;
     }
     return Species;
 }(Skill));
 var IsTerran = new Species(1, "Terran");
 var IsTulaki = new Species(2, "Tulaki");
-var IsElysian = new Species(3, "Elysian");
-var IsKelki = new Species(4, "Kelki");
+var IsElysian = new Species(3, "Elysian", true);
+var IsKelki = new Species(4, "Kelki", true);
 var IsOther = new Species(60, "Other");
+var IsPsiCapable = new Skill(61, "", "", 0);
 var SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsOther];
 /*** COMBAT SKILLS ***/
 var Toughness = new Skill(5, "Toughness", "Grants +1 locational body hit per rank.", 2, true);
@@ -99,7 +103,7 @@ var ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, Eth
     HelmConsole, WeaponsConsole, CommsConsole, EngineeringConsole, ScienceConsole,
     SpacerRep, ClearanceCertified, AscendancyStatus, CommonalityStatus, DominionStatus, FreeUnionStatus
 ];
-var PsionicPotential = new Skill(38, "Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true);
+var PsionicPotential = new Skill(38, "Psionic Potential", "Grants 2 extra Psi Points per day.", 1, true, IsPsiCapable);
 // Elysian Paths
 var Coercion = new Skill(39, "Coercion", "Forcing your will upon other minds.", 1, true, IsElysian, true, undefined, 6);
 var Endopathoi = new Skill(40, "Endopathoi", "Projecting the emotions of Disgust, Sadness, Surprise & Fear. Requires Coercion Rank 1.", 1, true, Coercion, true, undefined, 6);
@@ -127,7 +131,7 @@ var Stalwart = new Skill(57, "Stalwart", "Allows Will Points to be spent to act 
 var HeroicDevotion = new Skill(58, "Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki, true);
 var PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki, true);
 var SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
-var allSkills = SpeciesTypes.concat.apply(SpeciesTypes, CombatSkills.concat(ProfessionSkills, PsionicSkills, SpeciesSkills));
+var allSkills = [].concat.apply([], SpeciesTypes.concat(CombatSkills, ProfessionSkills, PsionicSkills, SpeciesSkills, [IsPsiCapable]));
 var MainController = /** @class */ (function () {
     function MainController($location) {
         this.$location = $location;
@@ -230,9 +234,14 @@ var MainController = /** @class */ (function () {
     };
     MainController.prototype.handleSpeciesChanged = function () {
         SpeciesTypes.forEach(function (s) { return s.count = 0; });
+        IsPsiCapable.count = 0;
         this.updateSelected();
-        if (this.selectedSpecies)
+        if (this.selectedSpecies) {
             this.selectedSpecies.count++;
+            if (this.selectedSpecies.psiCapable) {
+                IsPsiCapable.count++;
+            }
+        }
         this.updateSelected();
     };
     MainController.$inject = ["$location"];
