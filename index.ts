@@ -140,8 +140,8 @@ const Relentless = new Skill(54, "Relentless"	, "Allows will points to be spent 
 const Resolve = new Skill(55, "Resolve", "Allows Will Points to be spent to recover quicker from injury", 1, false, IsTerran);
 const IronMind = new Skill(56, "Iron Mind", "Allows Will Points to be spent to resist psionic powers or KNOCKOUT calls", 1, false, IsTerran);
 const Stalwart = new Skill(57, "Stalwart", "Allows Will Points to be spent to act normally while Walking Wounded", 1, false, IsTerran);
-const HeroicDevotion = new Skill(58, "Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki);
-const PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki);
+const HeroicDevotion = new Skill(58, "Heroic Devotion", "Allows a character to gain the favour and powers of their chosen Immortal Spirit", 2, true, IsTulaki, true);
+const PriestlyDevotion = new Skill(59, "Priestly Devotion", "Grants the use of 1 Ceremony per rank", 2, true, IsTulaki, true);
 
 const SpeciesSkills = [IsTerran, Discipline, ExtraWillPoint, Relentless, Resolve, IronMind, Stalwart, IsTulaki, HeroicDevotion, PriestlyDevotion];
 
