@@ -19,6 +19,7 @@ html(ng-app="calc")
                         img(src="./images/logo.png").logo
                         .h2.mb-3.mt-3 Orion Sphere Skill Calculator
 
+            //Mobile selected skill info pane
             .d-block.d-sm-block.d-md-block.d-lg-none.mb-3
                 .row
                     .col
@@ -37,6 +38,7 @@ html(ng-app="calc")
                                 button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove
 
             .row.mb-3
+                //Skills panels
                 .col-lg-7
                     .row
                         .col
@@ -63,6 +65,8 @@ html(ng-app="calc")
                                             span(ng-if="skill.wikiLink") &nbsp;
                                             a.wiki-link(ng-if="skill.wikiLink" ng-href="{{skill.getWikiLink()}}" target="_blank") [View on Wiki]
                                     .skill-cost(ng-if="skill.baseCost") {{ skill.cost() }}{{skill.stacks && !skill.stacksAreFree ? "*" : ""}}
+
+                //Desktop selected skill info pane
                 .col.d-none.d-sm-none.d-md-none.d-lg-block
                     .row.no-gutters
                         .col
