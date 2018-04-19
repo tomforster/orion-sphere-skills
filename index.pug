@@ -13,31 +13,17 @@ html(ng-app="calc")
         title Orion Sphere Skill Calculator
     body(ng-controller="MainController as c")
         .container
-            .row
+            .row.mt-3
                 .col
                     .header
                         img(src="./images/logo.png").logo
                         .h2.mb-3.mt-3 Orion Sphere Skill Calculator
 
             //Mobile selected skill info pane
-            .d-block.d-sm-block.d-md-block.d-lg-none.mb-3
-                .row
-                    .col
-                        select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()" ng-options="species.name for species in c.speciesTypes")
-                            option(value="" selected) Select a species
-                    .col
-                        .points-total Points
-                            span.d-none.d-sm-inline  Spent
-                            span : {{c.totalPoints - c.points}}/{{c.totalPoints}}
-                .row
-                    .col
-                        .list-group
-                            .selected-skill.list-group-item(ng-repeat="skill in c.selectedSkills")
-                                .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
-                                .selected-skill-cost {{skill.pointsSpent()}}
-                                button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove
+            .d-block.d-sm-block.d-md-block.d-lg-none.mt-3
+                include selected
 
-            .row.mb-3
+            .row.mt-3
                 //Skills panels
                 .col-lg-7
                     .row
@@ -68,19 +54,7 @@ html(ng-app="calc")
 
                 //Desktop selected skill info pane
                 .col.d-none.d-sm-none.d-md-none.d-lg-block
-                    .row.no-gutters
-                        .col
-                            select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()" ng-options="species.name for species in c.speciesTypes")
-                                option(value="" selected) Select a species
-                        .col
-                            .points-total Points Spent: {{c.totalPoints - c.points}}/{{c.totalPoints}}
-                    .row
-                        .col
-                            .list-group
-                                .selected-skill.list-group-item(ng-repeat="skill in c.selectedSkills")
-                                    .selected-skill-name {{skill.name}} {{skill.stacks ? ("[Rank " + skill.count + "]") : ''}}
-                                    .selected-skill-cost {{skill.pointsSpent()}}
-                                    button.selected-skill-delete.btn.btn-danger(ng-click="c.handleRemoveSkillButtonClick(skill)") Remove
+                    include selected
 
             .row.mt-3
                 .col

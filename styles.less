@@ -159,16 +159,6 @@ small{
     padding: 3px;
     line-height: 1em;
     margin-left: 10px;
-    //  background-color: @colour1;
-    //  border-color: @colour1;
-    //  color: white;
-    //
-    //  &:hover
-    //  {
-    //    background-color: @colour2;
-    //    border-color: @colour2
-    //  }
-    //}
   }
 }
 
@@ -177,6 +167,9 @@ small{
   font-size: 1.3em;
   text-align: right;
   height: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .wiki-link
@@ -186,5 +179,31 @@ small{
   &:hover
   {
     color: #aa92d6;
+  }
+}
+
+.add-button
+{
+  width:1.5rem;
+  height:1.5rem;
+  background-color: @colour1;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:5px;
+  font-size:1.2em;
+  user-select: none;
+  border: #3d3d3d;
+  padding-bottom: 5px;
+
+  &:hover
+  {
+    background-color: @colour2;
+  }
+
+  &::before
+  {
+    content: "+"
   }
 }

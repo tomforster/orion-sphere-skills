@@ -122,6 +122,9 @@ small {
   font-size: 1.3em;
   text-align: right;
   height: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 .wiki-link {
   color: #c1a6f3;
@@ -129,4 +132,24 @@ small {
 }
 .wiki-link:hover {
   color: #aa92d6;
+}
+.add-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #428;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 1.2em;
+  user-select: none;
+  border: #3d3d3d;
+  padding-bottom: 5px;
+}
+.add-button:hover {
+  background-color: #6531c7;
+}
+.add-button::before {
+  content: "+";
 }
