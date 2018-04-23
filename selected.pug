@@ -6,7 +6,7 @@
         .points-total Points
             span.d-none.d-sm-inline &nbsp;Spent
             span : {{c.totalPoints - c.points}}/{{c.totalPoints}}
-            .add-button
+            .add-button(ng-click="c.handleAddPointsButtonClick()")
 .row
     .col
         .list-group

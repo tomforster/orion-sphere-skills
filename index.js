@@ -186,6 +186,10 @@ var MainController = /** @class */ (function () {
         skill.count--;
         this.updateSelected();
     };
+    MainController.prototype.handleAddPointsButtonClick = function () {
+        this.totalPoints++;
+        this.points++;
+    };
     MainController.prototype.updateDeps = function () {
         var skill = allSkills.find(function (skill) { return skill.count > 0 && skill.prerequisite && skill.prerequisite.count < skill.prerequisiteRank; });
         if (skill) {

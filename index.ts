@@ -230,6 +230,12 @@ class MainController implements IController
         skill.count--;
         this.updateSelected();
     }
+    
+    handleAddPointsButtonClick()
+    {
+        this.totalPoints++;
+        this.points++;
+    }
 
     private updateDeps()
     {
