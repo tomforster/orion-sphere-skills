@@ -164,8 +164,8 @@ const allSkills = [].concat(...SpeciesTypes, ...CombatSkills, ...ProfessionSkill
 
 class MainController implements IController
 {
-    totalPoints = 10;
-    points = 10;
+    totalPoints:number;
+    points:number;
 
     speciesTypes = SpeciesTypes;
     
@@ -180,6 +180,8 @@ class MainController implements IController
     $onInit()
     {
         const encodedSkills = this.$location.search().skills;
+        const points = Number(this.$location.search().points) || 10;
+        this.points = this.totalPoints = Math.max(points, 10);
 
         if(encodedSkills)
         {
@@ -188,7 +190,6 @@ class MainController implements IController
                 const skills = atob(encodedSkills);
                 skills.split(",").forEach((skillString:string) =>
                 {
-            
                     const tokens = skillString.split(".");
                     if (tokens.length > 0)
                     {
@@ -210,7 +211,6 @@ class MainController implements IController
             }
             catch (e)
             {
-                this.selectedSkills = [];
                 this.updateSelected();
             }
         }
@@ -235,6 +235,17 @@ class MainController implements IController
     {
         this.totalPoints++;
         this.points++;
+        this.updateSelected();
+    }
+
+    handleRemovePointsButtonClick()
+    {
+        if(this.points > 0 && this.totalPoints > 10)
+        {
+            this.totalPoints--;
+            this.points--;
+            this.updateSelected();
+        }
     }
 
     private updateDeps()
@@ -262,13 +273,15 @@ class MainController implements IController
         //check for errors
         if(this.points < 0)
         {
-            this.selectedSkills = [];
-            this.points = this.totalPoints;
+            allSkills.forEach(skill => skill.count = 0);
+            this.updateSelected();
+            return;
         }
     
         const stringRep = btoa((this.selectedSpecies ? this.selectedSpecies.id + "," : "") + this.selectedSkills.filter(skill => skill.count > 0).map(skill => skill.id + (skill.count > 1 ? "." + skill.count : "")).join(","));
         this.$location.replace();
-        this.$location.search("skills", stringRep);
+        this.$location.search("skills", stringRep ? stringRep : null);
+        this.$location.search("points", this.totalPoints == 10 ? null : this.totalPoints);
     }
     
     isDisabled(skill:Skill)

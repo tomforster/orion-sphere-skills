@@ -64,7 +64,7 @@ body {
 .page-info .skill-cost {
   width: 2rem;
   height: 2rem;
-  background-color: #428;
+  background-color: #5429a7;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
@@ -126,6 +126,9 @@ small {
   align-items: center;
   justify-content: flex-end;
 }
+.points-total .points-invalid {
+  color: #f23a4c;
+}
 .wiki-link {
   color: #c1a6f3;
   pointer-events: auto;
@@ -133,23 +136,42 @@ small {
 .wiki-link:hover {
   color: #aa92d6;
 }
-.add-button {
+.add-button,
+.remove-button {
   width: 1.5rem;
   height: 1.5rem;
-  background-color: #428;
   flex-shrink: 0;
-  display: flex;
   justify-content: center;
+  display: flex;
   align-items: center;
-  margin-left: 5px;
   font-size: 1.2em;
   user-select: none;
   border: #3d3d3d;
   padding-bottom: 5px;
+  cursor: pointer;
+}
+.add-button {
+  background-color: #5429a7;
+  margin-left: 5px;
 }
 .add-button:hover {
   background-color: #6531c7;
 }
 .add-button::before {
   content: "+";
+}
+.remove-button {
+  background-color: #dc3545;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.remove-button:hover {
+  background-color: #f23a4c;
+}
+.remove-button::before {
+  content: "-";
+}
+.remove-button.disabled {
+  cursor: unset;
+  background-color: #3f3f3f;
 }

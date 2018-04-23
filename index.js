@@ -142,8 +142,6 @@ var allSkills = [].concat.apply([], SpeciesTypes.concat(CombatSkills, Profession
 var MainController = /** @class */ (function () {
     function MainController($location) {
         this.$location = $location;
-        this.totalPoints = 10;
-        this.points = 10;
         this.speciesTypes = SpeciesTypes;
         this.selectedSkills = [];
         this.activePage = "combat";
@@ -151,6 +149,8 @@ var MainController = /** @class */ (function () {
     }
     MainController.prototype.$onInit = function () {
         var encodedSkills = this.$location.search().skills;
+        var points = Number(this.$location.search().points) || 10;
+        this.points = this.totalPoints = Math.max(points, 10);
         if (encodedSkills) {
             try {
                 var skills = atob(encodedSkills);
@@ -171,7 +171,6 @@ var MainController = /** @class */ (function () {
                 this.updateSelected();
             }
             catch (e) {
-                this.selectedSkills = [];
                 this.updateSelected();
             }
         }
@@ -189,6 +188,14 @@ var MainController = /** @class */ (function () {
     MainController.prototype.handleAddPointsButtonClick = function () {
         this.totalPoints++;
         this.points++;
+        this.updateSelected();
+    };
+    MainController.prototype.handleRemovePointsButtonClick = function () {
+        if (this.points > 0 && this.totalPoints > 10) {
+            this.totalPoints--;
+            this.points--;
+            this.updateSelected();
+        }
     };
     MainController.prototype.updateDeps = function () {
         var skill = allSkills.find(function (skill) { return skill.count > 0 && skill.prerequisite && skill.prerequisite.count < skill.prerequisiteRank; });
@@ -207,12 +214,14 @@ var MainController = /** @class */ (function () {
         this.points = this.totalPoints - this.selectedSkills.reduce(function (total, next) { return total + next.pointsSpent(); }, 0);
         //check for errors
         if (this.points < 0) {
-            this.selectedSkills = [];
-            this.points = this.totalPoints;
+            allSkills.forEach(function (skill) { return skill.count = 0; });
+            this.updateSelected();
+            return;
         }
         var stringRep = btoa((this.selectedSpecies ? this.selectedSpecies.id + "," : "") + this.selectedSkills.filter(function (skill) { return skill.count > 0; }).map(function (skill) { return skill.id + (skill.count > 1 ? "." + skill.count : ""); }).join(","));
         this.$location.replace();
-        this.$location.search("skills", stringRep);
+        this.$location.search("skills", stringRep ? stringRep : null);
+        this.$location.search("points", this.totalPoints == 10 ? null : this.totalPoints);
     };
     MainController.prototype.isDisabled = function (skill) {
         if (skill.baseCost === 0)

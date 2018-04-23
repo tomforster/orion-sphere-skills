@@ -1,11 +1,12 @@
 .row.no-gutters
     .col
         select.form-control.form-control-sm(ng-model="c.selectedSpecies" ng-change="c.handleSpeciesChanged()" ng-options="species.name for species in c.speciesTypes")
-            option(value="" selected) Select a species
-    .col
-        .points-total Points
-            span.d-none.d-sm-inline &nbsp;Spent
-            span : {{c.totalPoints - c.points}}/{{c.totalPoints}}
+            option(value="" selected) Select species
+    .col-7
+        .points-total Points:
+            //span.d-none.d-sm-inline &nbsp;Spent:
+            .remove-button(ng-click="c.handleRemovePointsButtonClick()" ng-class="{disabled: c.points < 1}")
+            span {{c.totalPoints - c.points}}/{{c.totalPoints}}
             .add-button(ng-click="c.handleAddPointsButtonClick()")
 .row
     .col

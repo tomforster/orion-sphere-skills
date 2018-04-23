@@ -1,5 +1,8 @@
-@colour1: #428;
+@colour1: #5429a7;
 @colour2: #6531c7;
+
+@negativeColor1: #dc3545;
+@negativeColor2: #f23a4c;
 
 body
 {
@@ -170,6 +173,11 @@ small{
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  .points-invalid
+  {
+    color: @negativeColor2
+  }
 }
 
 .wiki-link
@@ -182,20 +190,23 @@ small{
   }
 }
 
-.add-button
-{
-  width:1.5rem;
-  height:1.5rem;
-  background-color: @colour1;
+.add-button,.remove-button {
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
-  display: flex;
   justify-content: center;
+  display: flex;
   align-items: center;
-  margin-left:5px;
-  font-size:1.2em;
+  font-size: 1.2em;
   user-select: none;
   border: #3d3d3d;
   padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.add-button {
+  background-color: @colour1;
+  margin-left:5px;
 
   &:hover
   {
@@ -205,5 +216,27 @@ small{
   &::before
   {
     content: "+"
+  }
+}
+
+.remove-button {
+  background-color: @negativeColor1;
+  margin-right:5px;
+  margin-left:5px;
+
+  &:hover
+  {
+    background-color: @negativeColor2;
+  }
+
+  &::before
+  {
+    content: "-"
+  }
+
+  &.disabled
+  {
+    cursor: unset;
+    background-color: #3f3f3f;
   }
 }
