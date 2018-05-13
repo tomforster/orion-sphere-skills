@@ -106,7 +106,7 @@ const Scientist = new Skill(22, "Scientist", "Scientists can make use of special
 const EthericScience = new Skill(23, "Etheric Science", "Specialism in exotic particles and strange energies. Requires Scientist.", "id=professional_skills#etheric_corporeal_life_science", 1, true, Scientist);
 const CorporealScience = new Skill(24, "Corporeal Science", "Specialism in exotic substances. Requires Scientist.", "id=professional_skills#etheric_corporeal_life_science", 1, true, Scientist);
 const LifeScience = new Skill(25, "Life Science"	, "Specialism in strange creatures and plants. Requires Scientist.", "id=professional_skills#etheric_corporeal_life_science", 1, true, Scientist);
-const ExtraDevice = new Skill(26, "Extra Device Mastery", "Grants ability to use more Science Devices. Requires Scientist.", "id=professional_skills#etheric_corporeal_life_science", 1, true, Scientist, true);
+// const ExtraDevice = new Skill(26, "Extra Device Mastery", "Grants ability to use more Science Devices. Requires Scientist.", "id=professional_skills#etheric_corporeal_life_science", 1, true, Scientist, true);
 // Spaceflight Skills
 const HelmConsole = new Skill(27, "Helm Console", "Operate Helm Console on Spacer starships.", "id=professional_skills#helm_console", 1);
 const WeaponsConsole = new Skill(28, "Weapons Console", "Operate Weapons Console on Spacer starships.", "id=professional_skills#weapons_console", 1);
@@ -121,7 +121,7 @@ const CommonalityStatus = new Skill(35, "Commonality Status", "Improved reputati
 const DominionStatus = new Skill(36, "Dominion Status", "Improved reputation with the Dominion.", "id=professional_skills#dominion_status", 2, true, undefined, true);
 const FreeUnionStatus = new Skill(37, "Free Union Status", "Improved reputation with the Free Union.", "id=professional_skills#free_union_status", 2, true, undefined, true);
 
-const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, EthericScience, CorporealScience, LifeScience, ExtraDevice,
+const ProfessionSkills = [FirstAid, Physician, Engineer, ExtraMods, Scientist, EthericScience, CorporealScience, LifeScience,
     HelmConsole, WeaponsConsole, CommsConsole, EngineeringConsole, ScienceConsole,
     SpacerRep, ClearanceCertified, AscendancyStatus, CommonalityStatus, DominionStatus, FreeUnionStatus
 ];
