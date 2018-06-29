@@ -64,9 +64,10 @@ var IsTerran = new Species(1, "Terran");
 var IsTulaki = new Species(2, "Tulaki");
 var IsElysian = new Species(3, "Elysian", true);
 var IsKelki = new Species(4, "Kelki", true);
+var IsLithos = new Species(62, "Lithos", true);
 var IsOther = new Species(60, "Other");
 var IsPsiCapable = new Skill(61, "", "", null, 0);
-var SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsOther];
+var SpeciesTypes = [IsTerran, IsTulaki, IsElysian, IsKelki, IsLithos, IsOther];
 /*** COMBAT SKILLS ***/
 var Toughness = new Skill(5, "Toughness", "Grants +1 locational body hit per rank.", "id=combat_skills#toughness", 2, true);
 var Resilience = new Skill(6, "Resilience", "Your death count is extended by 100 seconds per rank.", "id=combat_skills#resilience", 1, true);
@@ -126,8 +127,12 @@ var Psychirosi = new Skill(48, "Psychirosi", "Using psychosomatic pathways to ga
 var Telekinesis = new Skill(49, "Telekinesis", "Moving physical matter with the power of the mind.", "id=kelki_psionic_paths#telekinesis", 1, true, IsKelki, true, undefined, 6);
 var TelekineticFinesse = new Skill(50, "Telekinetic Finesse", "Using focused Telekinetic force to target specific objects or damage them. Requires Telekinesis Rank 2.", "id=kelki_psionic_paths#telekinetic_finesse", 1, true, Telekinesis, true, 2, 6);
 var TelekineticFortification = new Skill(51, "Telekinetic Fortification", "Using Telekinetic force to protect the body from attacks. Requires Telekinesis Rank 3.", "id=kelki_psionic_paths#telekinetic_fortification", 1, true, Telekinesis, true, 3, 6);
+// Lithos Paths
+var Lithokinesis = new Skill(63, "Lithokinesis", "Using psionic energy to influence earth and stone, and Lithos bodies.", "id=lithos_psionic_paths#lithokinesis", 1, true, IsLithos, true, undefined, 6);
+var Lithomorphosis = new Skill(64, "Lithomorphosis", "", "id=lithos_psionic_paths#lithomorphosis", 1, true, Lithokinesis, true, 3, 6);
+var Henosis = new Skill(65, "Henosis", "", "id=lithos_psionic_paths#henosis", 1, true, Lithokinesis, true, 4, 6);
 var PsionicSkills = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
-    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification];
+    PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification, IsLithos, Lithokinesis, Lithomorphosis, Henosis];
 // Species
 var Discipline = new Skill(52, "Discipline", "Grants 2 Will Points, and the ability to spend them to resist EFFECT calls", "id=discipline_skills#discipline", 2, false, IsTerran);
 var ExtraWillPoint = new Skill(53, "Extra Will Point", "Grants +1 Will Point per rank", "id=discipline_skills#extra_will_point", 1, true, IsTerran);
