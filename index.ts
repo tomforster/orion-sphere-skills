@@ -149,8 +149,8 @@ const TelekineticFortification = new Skill(51, "Telekinetic Fortification", "Usi
 // Lithos Paths
 
 const Lithokinesis = new Skill(63, "Lithokinesis", "Using psionic energy to influence earth and stone, and Lithos bodies.", "id=lithos_psionic_paths#lithokinesis", 1, true, IsLithos, true, undefined, 6);
-const Lithomorphosis = new Skill(64, "Lithomorphosis", "", "id=lithos_psionic_paths#lithomorphosis", 1, true, Lithokinesis, true, 3, 6);
-const Henosis = new Skill(65, "Henosis", "", "id=lithos_psionic_paths#henosis", 1, true, Lithokinesis, true, 4, 6);
+const Lithomorphosis = new Skill(64, "Lithomorphosis", "Mending or breaking physical objects and items.", "id=lithos_psionic_paths#lithomorphosis", 1, true, Lithokinesis, true, 3, 6);
+const Henosis = new Skill(65, "Henosis", "Communing with earth and stone in a variety of mystical ways.", "id=lithos_psionic_paths#henosis", 1, true, Lithokinesis, true, 4, 6);
 
 const PsionicSkills:Skill[] = [PsionicPotential, IsElysian, Coercion, Endopathoi, Exopathoi, Mnemomorphosis,
     PsionicResonance, ResonantVitality, ResonantBlade, Psychosomatics, Empathosomatics, Psychirosi, IsKelki, Telekinesis, TelekineticFinesse, TelekineticFortification, IsLithos, Lithokinesis, Lithomorphosis, Henosis];
